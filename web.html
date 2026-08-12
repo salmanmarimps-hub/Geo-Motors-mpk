@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Motors | Premium Car Dealership</title>
+    <style>
+        :root {
+            --primary: #2563eb;         /* Royal Blue */
+            --primary-hover: #1d4ed8;   /* Darker Blue */
+            --accent: #38bdf8;          /* Light Electric Blue */
+            --dark: #0f172a;            /* Dark Navy */
+            --light: #f8fafc;
+            --gray: #64748b;
+            --card-bg: #ffffff;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--dark);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: white;
+            background-color: var(--primary);
+        }
+
+        /* Page Layout Control */
+        .page-section {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .page-section.active-page {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), 
+                        url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+            color: white;
+            text-align: center;
+            padding: 6rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            border-bottom: 4px solid var(--primary);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: #e2e8f0;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Filter Controls */
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.2rem;
+            border: 1px solid var(--gray);
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Cars Grid */
+        .car-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .car-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+            transition: var(--transition);
+            border: 1px solid #e2e8f0;
+        }
+
+        .car-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.15);
+            border-color: var(--accent);
+        }
+
+        .car-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .car-details {
+            padding: 1.5rem;
+        }
+
+        .car-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .car-specs {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 0.8rem;
+        }
+
+        .car-price {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus, 
+        .form-group select:focus, 
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: #94a3b8;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 3px solid var(--primary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo" onclick="switchPage('home')">APEX<span>MOTORS</span></a>
+            <ul class="nav-links">
+                <li><a onclick="switchPage('home')" id="nav-home" class="active">Home</a></li>
+                <li><a onclick="switchPage('inventory')" id="nav-inventory">Inventory</a></li>
+                <li><a onclick="switchPage('about')" id="nav-about">About Us</a></li>
+                <li><a onclick="switchPage('contact')" id="nav-contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Page 1: Home -->
+    <section id="home" class="page-section active-page">
+        <div class="hero">
+            <h1>Apni Dream Car Haasil Karein</h1>
+            <p>Aap ke liye behtareen aur meyaari gaadiyon ka sab se bara stock.</p>
+            <button class="btn" onclick="switchPage('inventory')">Cars Dekhein</button>
+        </div>
+
+        <h2 style="margin-bottom: 1.5rem; color: var(--dark);">Featured Vehicles</h2>
+        <div class="car-grid" id="featured-cars"></div>
+    </section>
+
+    <!-- Page 2: Inventory -->
+    <section id="inventory" class="page-section">
+        <h2 style="margin-bottom: 1rem;">Hamara Stock</h2>
+        <p style="color: var(--gray); margin-bottom: 1.5rem;">Filter ke zariye apni pasandida gari talash karein:</p>
+        
+        <div class="filters">
+            <button class="filter-btn active" onclick="filterCars('all', this)">All</button>
+            <button class="filter-btn" onclick="filterCars('Hatchback', this)">Hatchback</button>
+            <button class="filter-btn" onclick="filterCars('Sedan', this)">Sedans</button>
+            <button class="filter-btn" onclick="filterCars('SUV', this)">SUVs</button>
+            <button class="filter-btn" onclick="filterCars('Sports', this)">Sports Cars</button>
+        </div>
+
+        <div class="car-grid" id="inventory-cars"></div>
+    </section>
+
+    <!-- Page 3: About Us -->
+    <section id="about" class="page-section">
+        <h2 style="margin-bottom: 1rem;">Apex Motors Ke Baare Mein</h2>
+        <p style="font-size: 1.1rem; color: var(--gray); margin-bottom: 2rem;">
+            Apex Motors pichle 10 saalon se apne customers ko aala meyaar aur trusted car buying experience faraham kar raha hai. 
+            Hamara maqsad aap ko munasib qeemat mein behtareen gaariyan aur shaffaf service dena hai.
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; text-align: center;">
+            <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-top: 3px solid var(--primary);">
+                <h3 style="font-size: 2rem; color: var(--primary);">1,500+</h3>
+                <p>Cars Sold</p>
+            </div>
+            <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-top: 3px solid var(--primary);">
+                <h3 style="font-size: 2rem; color: var(--primary);">98%</h3>
+                <p>Satisfied Clients</p>
+            </div>
+            <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-top: 3px solid var(--primary);">
+                <h3 style="font-size: 2rem; color: var(--primary);">10+</h3>
+                <p>Years Experience</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page 4: Contact & Test Drive -->
+    <section id="contact" class="page-section">
+        <h2 style="margin-bottom: 1.5rem;">Hum Se Raabta Karein</h2>
+        
+        <div class="contact-container">
+            <div>
+                <h3>Test Drive Book Karein</h3>
+                <p style="color: var(--gray); margin-bottom: 1.5rem;">Form bharein aur hamari team aap se jald raabta karegi.</p>
+                <form id="contactForm" onsubmit="handleFormSubmit(event)">
+                    <div class="form-group">
+                        <label>Naam</label>
+                        <input type="text" required placeholder="Aapka Naam">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" required placeholder="0300-1234567">
+                    </div>
+                    <div class="form-group">
+                        <label>Pasandida Gari</label>
+                        <select required id="carSelect">
+                            <option value="">Gari Select Karein</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Paigham (Optional)</label>
+                        <textarea rows="4" placeholder="Kuch mazeed poochna chahte hain?"></textarea>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Submit Karein</button>
+                </form>
+            </div>
+
+            <div>
+                <h3>Showroom Location</h3>
+                <p style="margin-top: 1rem; color: var(--gray);">
+                    <strong>Address:</strong> Main Auto Boulevard, Phase 6, DHA, Karachi<br><br>
+                    <strong>Timing:</strong> Somwar se Hafta (9:00 AM - 9:00 PM)<br><br>
+                    <strong>Phone:</strong> +92 300 1234567<br><br>
+                    <strong>Email:</strong> info@apexmotors.com
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Apex Motors. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript logic -->
+    <script>
+        const carsData = [
+            { id: 1, title: 'Alto 2026', category: 'Hatchback', year: 2026, mileage: '0 km (Brand New)', price: 'PKR 3,050,000', img: 'https://cache1.pakwheels.com/system/car_generation_pictures/6013/medium/Suzuki_Alto_-_PNG.png', featured: true },
+            { id: 2, title: 'Civic RS Turbo', category: 'Sedan', year: 2023, mileage: '12,000 km', price: 'PKR 8,500,000', img: 'https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=600&q=80', featured: true },
+            { id: 3, title: 'Fortuner Legender', category: 'SUV', year: 2024, mileage: '5,000 km', price: 'PKR 18,900,000', img: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80', featured: true },
+            { id: 4, title: 'Mustang GT V8', category: 'Sports', year: 2022, mileage: '8,500 km', price: 'PKR 25,000,000', img: 'https://images.unsplash.com/photo-1584345604476-8ec5e12e42dd?auto=format&fit=crop&w=600&q=80', featured: false },
+            { id: 5, title: 'Corolla Altis Grande', category: 'Sedan', year: 2022, mileage: '24,000 km', price: 'PKR 7,100,000', img: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?auto=format&fit=crop&w=600&q=80', featured: false },
+            { id: 6, title: 'Sportage AWD', category: 'SUV', year: 2023, mileage: '15,000 km', price: 'PKR 8,800,000', img: 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=600&q=80', featured: false },
+            { id: 7, title: 'Audi A6 Matrix', category: 'Sedan', year: 2021, mileage: '30,000 km', price: 'PKR 19,500,000', img: 'https://images.unsplash.com/photo-1610768764270-790fefe1a116?auto=format&fit=crop&w=600&q=80', featured: false }
+        ];
+
+        function switchPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active-page');
+            });
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            document.getElementById(pageId).classList.add('active-page');
+            document.getElementById('nav-' + pageId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function createCarCard(car) {
+            return `
+                <div class="car-card">
+                    <img src="${car.img}" alt="${car.title}">
+                    <div class="car-details">
+                        <div class="car-title">${car.title}</div>
+                        <div class="car-specs">
+                            <span>${car.year}</span>
+                            <span>${car.category}</span>
+                            <span>${car.mileage}</span>
+                        </div>
+                        <div class="car-price">${car.price}</div>
+                        <button class="btn" style="width: 100%; text-align: center;" onclick="switchPage('contact')">Book Test Drive</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function initApp() {
+            const featuredGrid = document.getElementById('featured-cars');
+            const inventoryGrid = document.getElementById('inventory-cars');
+            const carSelect = document.getElementById('carSelect');
+
+            const featuredList = carsData.filter(car => car.featured);
+            featuredGrid.innerHTML = featuredList.map(createCarCard).join('');
+
+            inventoryGrid.innerHTML = carsData.map(createCarCard).join('');
+
+            carsData.forEach(car => {
+                const option = document.createElement('option');
+                option.value = car.title;
+                option.textContent = car.title;
+                carSelect.appendChild(option);
+            });
+        }
+
+        function filterCars(category, btnElement) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            const inventoryGrid = document.getElementById('inventory-cars');
+            if (category === 'all') {
+                inventoryGrid.innerHTML = carsData.map(createCarCard).join('');
+            } else {
+                const filtered = carsData.filter(car => car.category === category);
+                inventoryGrid.innerHTML = filtered.map(createCarCard).join('');
+            }
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            alert('Shukriya! Aap ki request moosool ho chuki hai. Hamari team jaldi raabta karegi.');
+            document.getElementById('contactForm').reset();
+        }
+
+        window.onload = initApp;
+    </script>
+</body>
+</html>
